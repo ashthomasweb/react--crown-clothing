@@ -8,11 +8,11 @@ import SignInUpPage from "./pages/signin/signinup.component";
 import Header from './components/header/header.component'
 
 
-const HatsPage = () => (
-  <div>
-    <h1>HATS PAGE</h1>
-  </div>
-);
+// const HatsPage = () => (
+//   <div>
+//     <h1>HATS PAGE</h1>
+//   </div>
+// );
 
 function App() {
 
