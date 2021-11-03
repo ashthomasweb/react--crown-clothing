@@ -5,7 +5,7 @@ import SignIn from "../../components/sign-in/sign-in.component";
 import "./signinuppage.styles.scss";
 
 const SignInUpPage = () => (
-  <div className="sign-in-and-in-sign-up">
+  <div className="sign-in-and-sign-up">
     <SignIn />
   </div>
 );
