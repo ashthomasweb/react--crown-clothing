@@ -7,7 +7,7 @@ import HomePage from "./pages/homepage/home.component";
 import ShopPage from "./pages/shop/shop.component";
 import SignInUpPage from "./pages/signinuppage/signinuppage.component";
 import Header from './components/header/header.component'
-import { auth } from './firebase/firebase.utils'
+import { auth, createUserProfileDocument } from './firebase/firebase.utils'
 
 const HatsPage = () => (
   <div>
@@ -25,21 +25,33 @@ class App extends Component {
 
   }
 
-
   unsubscribeFromAuth = null
   
   componentDidMount() {
-    // auth is user object received from firebase auth method
-    auth.onAuthStateChanged(user => {
-      this.setState({ currentUser: user })
+    // auth is object from firebase method, onAuthStateChanged is a subscription watcher, userAuth is the object returned
+    auth.onAuthStateChanged(async userAuth => {
+      if (userAuth) {
+        const userRef = await createUserProfileDocument(userAuth)
 
+        userRef.onSnapshot(snapShot => {
+          this.setState({
+            currentUser: {
+              id: snapShot.id,
+              ...snapShot.data()
+            }
+          }, () => {
+            console.log(this.state)
+          })
+        })
+      } else {
+        this.setState({ currentUser: userAuth })
+      }
     })
   }
 
   componentWillUnmount() {
     this.unsubscribeFromAuth()
   }
-
 
   render() {
 
