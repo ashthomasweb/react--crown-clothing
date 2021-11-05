@@ -28,7 +28,8 @@ class App extends Component {
   unsubscribeFromAuth = null
   
   componentDidMount() {
-    // auth is object from firebase method, onAuthStateChanged is a subscription watcher, userAuth is the object returned
+    // auth is object from firebase method, onAuthStateChanged is a subscription watcher 
+    // userAuth is the object returned
     auth.onAuthStateChanged(async userAuth => {
       if (userAuth) {
         const userRef = await createUserProfileDocument(userAuth)

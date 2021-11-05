@@ -22,9 +22,8 @@ class ShopPage extends Component {
                     <Collection key={id} {...otherProps} />
                 ))
             }
-            </div>
+        </div>
         )
-    
     }
 }
 
