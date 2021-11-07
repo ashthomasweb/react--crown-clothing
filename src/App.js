@@ -64,6 +64,7 @@ class App extends Component {
         <Route path='/hats' component={HatsPage} />
         <Route path='/shop' component={ShopPage} />
         <Route path='/signin' component={SignInUpPage} />
+        
       </Switch>
       </div>
     );
