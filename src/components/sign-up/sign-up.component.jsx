@@ -1,53 +1,108 @@
-import React, { Component } from "react";
+import React, { Component } from 'react'
 
-import FormInput from "../form-input/form-input.component";
-import CustomButton from "../custom-button/custom-button.component";
+import FormInput from '../form-input/form-input.component'
+import CustomButton from '../custom-button/custom-button.component'
 
-import "./sign-up.styles.scss";
+import { auth, createUserProfileDocument } from '../../firebase/firebase.utils'
+
+import './sign-up.styles.scss'
 
 class SignUp extends Component {
   constructor(props) {
-    super(props);
+    super(props)
 
     this.state = {
-      email: "",
-      password: "",
-    };
+      displayName: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
+    }
   }
 
-  handleSubmit = (event) => {
-    event.preventDefault();
-    this.setState({ email: "", password: "" });
-  };
+  handleSubmit = async (event) => {
+    event.preventDefault()
+
+    const { displayName, email, password, confirmPassword } = this.state
+
+    if (password !== confirmPassword) {
+      alert("passwords don't match")
+      return
+    }
+
+    try {
+
+      const { user } = await auth.createUserWithEmailAndPassword(email, password) 
+
+      await createUserProfileDocument(user, { displayName })
+
+      this.setState({
+        displayName: '',
+        email: '',
+        password: '',
+        confirmPassword: ''
+      })
+
+    } catch (error) {
+      console.error(error)
+
+    }
+
+  }
 
   handleChange = (event) => {
-    const { value, name } = event.target;
-    this.setState({ [name]: value });
-  };
+    const { value, name } = event.target
+    this.setState({ [name]: value })
+  }
 
   render() {
+    const { displayName, email, password, confirmPassword } = this.state
     return (
-      <div className="sign-up">
-        <h2>Create an Account</h2>
+      <div className='sign-up'>
+        <h2 className='title'>Create an Account</h2>
         <span>Sign up with Google or by email</span>
 
-        <form onSubmit={this.handleSubmit}>
+        <form className='sign-up-form' onSubmit={this.handleSubmit}>
+          <FormInput
+            type='text'
+            name='displayName'
+            value={displayName}
+            label='Display Name'
+            onChange={this.handleChange}
+            required
+          />
+          <FormInput
+            type='text'
+            name='email'
+            value={email}
+            label='Email'
+            onChange={this.handleChange}
+            required
+          />
+          <FormInput
+            type='password'
+            name='password'
+            value={password}
+            label='Password'
+            onChange={this.handleChange}
+            required
+          />
+          <FormInput
+            type='password'
+            name='confirmPassword'
+            value={confirmPassword}
+            label='Confirm Password'
+            onChange={this.handleChange}
+            required
+          />
 
-          <FormInput 
-          name="email"
-          onChange={this.handleChange} />
-          <FormInput 
-          name="password" 
-          onChange={this.handleChange} />
-          
-          <div className="buttons">
-            <CustomButton type="submit" > Sign Up </CustomButton>
-            <CustomButton type="submit"> Sign Up With Google </CustomButton>
+          <div className='buttons'>
+            <CustomButton type='submit'> Sign Up </CustomButton>
+            <CustomButton type='submit'> Sign Up With Google </CustomButton>
           </div>
         </form>
       </div>
-    );
+    )
   }
 }
 
-export default SignUp;
+export default SignUp
