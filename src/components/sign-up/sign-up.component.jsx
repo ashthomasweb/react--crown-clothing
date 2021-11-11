@@ -97,7 +97,6 @@ class SignUp extends Component {
 
           <div className='buttons'>
             <CustomButton type='submit'> Sign Up </CustomButton>
-            {/* <CustomButton type='submit'> Sign Up With Google </CustomButton> */}
           </div>
         </form>
       </div>

@@ -8,6 +8,7 @@ import ShopPage from "./pages/shop/shop.component";
 import SignInUpPage from "./pages/signinuppage/signinuppage.component";
 import Header from './components/header/header.component'
 import { auth, createUserProfileDocument } from './firebase/firebase.utils'
+import CustomButton from "./components/custom-button/custom-button.component"
 
 const HatsPage = () => (
   <div>
@@ -49,6 +50,8 @@ class App extends Component {
       }
     })
   }
+
+ 
 
   componentWillUnmount() {
     this.unsubscribeFromAuth()
